@@ -80,12 +80,12 @@ main() {
     launch_agent "president" "PRESIDENT"
     
     # boss1起動
-    launch_agent "multiagent:0.0" "boss1"
+    launch_agent "multiagent:1.1" "boss1"
     
     # workers起動
-    launch_agent "multiagent:0.1" "worker1"
-    launch_agent "multiagent:0.2" "worker2"
-    launch_agent "multiagent:0.3" "worker3"
+    launch_agent "multiagent:1.2" "worker1"
+    launch_agent "multiagent:1.3" "worker2"
+    launch_agent "multiagent:1.4" "worker3"
     
     echo ""
     log_success "✅ 全エージェントの起動コマンドを送信しました"

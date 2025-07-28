@@ -6,10 +6,10 @@
 get_agent_target() {
     case "$1" in
         "president") echo "president" ;;
-        "boss1") echo "multiagent:0.0" ;;
-        "worker1") echo "multiagent:0.1" ;;
-        "worker2") echo "multiagent:0.2" ;;
-        "worker3") echo "multiagent:0.3" ;;
+        "boss1") echo "multiagent:1.1" ;;
+        "worker1") echo "multiagent:1.2" ;;
+        "worker2") echo "multiagent:1.3" ;;
+        "worker3") echo "multiagent:1.4" ;;
         *) echo "" ;;
     esac
 }
@@ -41,10 +41,10 @@ show_agents() {
     echo "📋 利用可能なエージェント:"
     echo "=========================="
     echo "  president → president:0     (プロジェクト統括責任者)"
-    echo "  boss1     → multiagent:0.0  (チームリーダー)"
-    echo "  worker1   → multiagent:0.1  (実行担当者A)"
-    echo "  worker2   → multiagent:0.2  (実行担当者B)" 
-    echo "  worker3   → multiagent:0.3  (実行担当者C)"
+    echo "  boss1     → multiagent:1.1  (チームリーダー)"
+    echo "  worker1   → multiagent:1.2  (実行担当者A)"
+    echo "  worker2   → multiagent:1.3  (実行担当者B)" 
+    echo "  worker3   → multiagent:1.4  (実行担当者C)"
 }
 
 # ログ記録
