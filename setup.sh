@@ -38,33 +38,36 @@ log_info "📺 multiagentセッション作成開始 (4ペイン)..."
 tmux new-session -d -s multiagent -n "agents"
 
 # 2x2グリッド作成（合計4ペイン）
-tmux split-window -h -t "multiagent:0"      # 水平分割（左右）
-tmux select-pane -t "multiagent:0.0"
+tmux split-window -h -t "multiagent:1"      # 水平分割（左右）
+tmux select-pane -t "multiagent:1.1"
 tmux split-window -v                        # 左側を垂直分割
-tmux select-pane -t "multiagent:0.2"
+tmux select-pane -t "multiagent:1.3"
 tmux split-window -v                        # 右側を垂直分割
 
 # ペインタイトル設定
 log_info "ペインタイトル設定中..."
 PANE_TITLES=("boss1" "worker1" "worker2" "worker3")
 
+# ペイン番号は1,2,3,4になる
+PANE_NUMBERS=(1 2 3 4)
 for i in {0..3}; do
-    tmux select-pane -t "multiagent:0.$i" -T "${PANE_TITLES[$i]}"
+    PANE_NUM=${PANE_NUMBERS[$i]}
+    tmux select-pane -t "multiagent:1.$PANE_NUM" -T "${PANE_TITLES[$i]}"
     
     # 作業ディレクトリ設定
-    tmux send-keys -t "multiagent:0.$i" "cd $(pwd)" C-m
+    tmux send-keys -t "multiagent:1.$PANE_NUM" "cd $(pwd)" C-m
     
     # カラープロンプト設定
     if [ $i -eq 0 ]; then
         # boss1: 赤色
-        tmux send-keys -t "multiagent:0.$i" "export PS1='(\[\033[1;31m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
+        tmux send-keys -t "multiagent:1.$PANE_NUM" "export PS1='(\[\033[1;31m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
     else
         # workers: 青色
-        tmux send-keys -t "multiagent:0.$i" "export PS1='(\[\033[1;34m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
+        tmux send-keys -t "multiagent:1.$PANE_NUM" "export PS1='(\[\033[1;34m\]${PANE_TITLES[$i]}\[\033[0m\]) \[\033[1;32m\]\w\[\033[0m\]\$ '" C-m
     fi
     
     # ウェルカムメッセージ
-    tmux send-keys -t "multiagent:0.$i" "echo '=== ${PANE_TITLES[$i]} エージェント ==='" C-m
+    tmux send-keys -t "multiagent:1.$PANE_NUM" "echo '=== ${PANE_TITLES[$i]} エージェント ==='" C-m
 done
 
 log_success "✅ multiagentセッション作成完了"
@@ -118,7 +121,7 @@ echo "  2. 🤖 Claude Code起動:"
 echo "     # 手順1: President認証"
 echo "     tmux send-keys -t president 'claude --dangerously-skip-permissions' C-m"
 echo "     # 手順2: 認証後、multiagent一括起動"
-echo "     for i in {0..3}; do tmux send-keys -t multiagent:0.\$i 'claude --dangerously-skip-permissions' C-m; done"
+echo "     for i in {1..4}; do tmux send-keys -t multiagent:1.\$i 'claude --dangerously-skip-permissions' C-m; done"
 echo ""
 echo "  3. 📜 指示書確認:"
 echo "     PRESIDENT: instructions/president.md"
